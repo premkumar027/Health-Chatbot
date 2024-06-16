@@ -1,67 +1,98 @@
+import nltk
+from nltk.stem.lancaster import LancasterStemmer
+stemmer = LancasterStemmer()
+
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
 import random
 import json
 import pickle
-import numpy as np
-import tensorflow as tf
 
-import nltk
-from nltk.stem import WordNetLemmatizer
+# To Mount Google Drive
+from google.colab import drive
+drive.mount('/content/drive')
 
-lemmatizer = WordNetLemmatizer()
+# To Load data
+file_path = '/content/drive/MyDrive/intents.json'
+with open(file_path, 'r') as file:
+    data = json.load(file)
 
-intents = json.loads(open('intents.json').read())
+# To Process or load pre-processed data
+try:
+    with open("/content/drive/MyDrive/data.pickle", "rb") as f:
+        words, labels, training, output = pickle.load(f)
+except:
+    words, labels, docs_x, docs_y = [], [], [], []
+    for intent in data["intents"]:
+        for pattern in intent["patterns"]:
+            wrds = nltk.word_tokenize(pattern)
+            words.extend(wrds)
+            docs_x.append(wrds)
+            docs_y.append(intent["tag"])
 
-words = []
-classes = []
-documents = []
-ignoreLetters = ['?', '!', '.', ',']
+        if intent["tag"] not in labels:
+            labels.append(intent["tag"])
 
-for intent in intents['intents']:
-    for pattern in intent['patterns']:
-        wordList = nltk.word_tokenize(pattern)
-        words.extend(wordList)
-        documents.append((wordList, intent['tag']))
-        if intent['tag'] not in classes:
-            classes.append(intent['tag'])
+    words = sorted(set([stemmer.stem(w.lower()) for w in words if w != "?"]))
+    labels = sorted(labels)
 
-words = [lemmatizer.lemmatize(word) for word in words if word not in ignoreLetters]
-words = sorted(set(words))
+    out_empty = [0] * len(labels)
+    training, output = [], []
+    for x, doc in enumerate(docs_x):
+        bag = [1 if stemmer.stem(w.lower()) in doc else 0 for w in words]
+        output_row = out_empty[:]
+        output_row[labels.index(docs_y[x])] = 1
 
-classes = sorted(set(classes))
+        training.append(bag)
+        output.append(output_row)
 
-pickle.dump(words, open('words.pkl', 'wb'))
-pickle.dump(classes, open('classes.pkl', 'wb'))
+    training, output = np.array(training), np.array(output)
+    with open("/content/drive/MyDrive/data.pickle", "wb") as f:
+        pickle.dump((words, labels, training, output), f)
 
-training = []
-outputEmpty = [0] * len(classes)
+# To Define model
+model = Sequential([
+    Dense(8, activation='relu', input_shape=(len(training[0]),)),
+    Dense(8, activation='relu'),
+    Dense(len(output[0]), activation='softmax')
+])
+model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-for document in documents:
-    bag = []
-    wordPatterns = document[0]
-    wordPatterns = [lemmatizer.lemmatize(word.lower()) for word in wordPatterns]
-    for word in words:
-        bag.append(1) if word in wordPatterns else bag.append(0)
+# To Load or train model
+try:
+    model.load_weights("/content/drive/MyDrive/model.h5")
+except:
+    model.fit(training, output, epochs=1000, batch_size=8, verbose=1)
+    model.save_weights("/content/drive/MyDrive/model.h5")
 
-    outputRow = list(outputEmpty)
-    outputRow[classes.index(document[1])] = 1
-    training.append(bag + outputRow)
+# To Utility function for creating a bag of words
+def bag_of_words(s, words):
+    bag = [0] * len(words)
+    s_words = [stemmer.stem(word.lower()) for word in nltk.word_tokenize(s)]
+    for w in s_words:
+        if w in words:
+            bag[words.index(w)] = 1
+    return np.array([bag])
 
-random.shuffle(training)
-training = np.array(training)
+# To Chat function
+def chat():
+    print("Start talking with the bot (type quit to stop)!")
+    while True:
+        inp = input("You: ")
+        if inp.lower() == "quit":
+            break
 
-trainX = training[:, :len(words)]
-trainY = training[:, len(words):]
+        results = model.predict(bag_of_words(inp, words))
+        results_index = np.argmax(results)
+        tag = labels[results_index]
 
-model = tf.keras.Sequential()
-model.add(tf.keras.layers.Dense(128, input_shape=(len(trainX[0]),), activation = 'relu'))
-model.add(tf.keras.layers.Dropout(0.5))
-model.add(tf.keras.layers.Dense(64, activation = 'relu'))
-model.add(tf.keras.layers.Dropout(0.5))
-model.add(tf.keras.layers.Dense(len(trainY[0]), activation='softmax'))
+        if results[0][results_index] > 0.7:  # Adjusting for the correct dimension
+            responses = next((tg['responses'] for tg in data['intents'] if tg['tag'] == tag), ["Not sure what you mean"])
+            print(random.choice(responses))
+        else:
+            print("I'm not sure what you want.")
 
-sgd = tf.keras.optimizers.SGD(learning_rate=0.01, momentum=0.9, nesterov=True)
-model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-
-model.fit(trainX, trainY, epochs=200, batch_size=5, verbose=1)
-model.save('chatbot_model.h5')
-print('Done')
+# To Start the chat
+chat()
