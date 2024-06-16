@@ -1,0 +1,100 @@
+{
+    "intents": [
+    {
+    "tag": "greeting",
+    "patterns": ["Hi", "How are you", "Is anyone there?", "Hello", "Good day", "What's up"],
+    "responses": ["Hello, thanks for visiting", "Good to see you again", "Hi there, how can I help?", "Hello! How can I assist you today?"]
+    },
+    {
+    "tag": "goodbye",
+    "patterns": ["Bye", "See you later", "Goodbye", "I'm leaving", "Have a good day"],
+    "responses": ["See you later, thanks for visiting", "Have a nice day", "Bye! Come back again soon.", "Goodbye! Stay healthy and take care!"]
+    },
+    {
+    "tag": "thanks",
+    "patterns": ["Thanks", "Thank you", "That's helpful", "Appreciate your help", "Thanks a lot"],
+    "responses": ["Happy to help!", "Any time!", "My pleasure", "You're welcome!"]
+    },
+    {
+    "tag": "headache",
+    "patterns": ["I have a headache", "My head is pounding", "Headache relief", "Severe headache", "Can't think because of my headache"],
+    "responses": ["For a mild headache, you may consider taking Ibuprofen or Paracetamol. Make sure to follow the dosing instructions and consult with your healthcare provider if the headache persists.", "If your headache comes with blurred vision, loss of balance, or lasts more than a day, seek medical attention immediately."]
+    },
+    {
+    "tag": "cold",
+    "patterns": ["I think I have a cold", "Common cold treatment", "Runny nose and sneezing", "Cold medicine", "Cough and cold"],
+    "responses": ["Over-the-counter cold remedies include decongestants and antihistamines. Additionally, ensure you stay hydrated and get plenty of rest.", "If symptoms persist for more than a week or worsen, please consult a doctor."]
+    },
+    {
+    "tag": "allergies",
+    "patterns": ["I'm allergic", "Allergy medications", "Sneezing and itchy eyes", "Seasonal allergies", "What to take for allergic reaction"],
+    "responses": ["Antihistamines can help reduce allergic reactions. For seasonal allergies, cetirizine or loratadine might be recommended. Consult your doctor for personalized advice.", "In case of a severe allergic reaction, seek immediate medical help."]
+    },
+    {
+    "tag": "stomachache",
+    "patterns": ["My stomach hurts", "I have a stomachache", "Stomach pain relief", "What to do for stomach pain", "Medicine for stomach pain"],
+    "responses": ["For stomach pain, you may take antacids if it's mild. However, if the pain is severe or persistent, it's important to consult a healthcare professional.", "Avoid spicy and fatty foods if you are experiencing stomach pain, and drink plenty of water."]
+    },
+    {
+    "tag": "fever",
+    "patterns": ["I have a fever", "High temperature", "How to reduce fever", "Best fever reducer", "Fever treatment at home"],
+    "responses": ["A mild fever can often be treated with Ibuprofen or Acetaminophen. Remember to keep hydrated and consult a doctor if the fever exceeds 38°C (100.4°F) or lasts more than three days.", "Keep a close eye on fever symptoms, especially in children and the elderly, and seek medical advice if it doesn't improve."]
+    },
+    {
+    "tag": "insomnia",
+    "patterns": ["I can't sleep", "Need something for sleep", "Can't seem to fall asleep", "Sleeping pills", "Natural remedies for sleep"],
+    "responses": ["For insomnia, consider establishing a regular bedtime routine and avoiding screens before bed. If the issue persists, speak to your healthcare provider about potential treatments.", "Herbal teas such as chamomile or lavender may also help relax and promote sleep."]
+    },
+    {
+    "tag": "anxiety",
+    "patterns": ["Feeling anxious", "Anxiety help", "Can't stop worrying", "Treatment for anxiety", "Medications for anxiety"],
+    "responses": ["Managing anxiety might involve counseling or medication, such as SSRIs. Regular exercise and a healthy diet can also help alleviate symptoms.", "Consider practicing relaxation techniques such as deep breathing, meditation, or yoga."]
+    },
+    {
+    "tag": "skin rash",
+    "patterns": ["I have a rash", "Skin irritation", "Rash treatment", "Itchy skin rash", "What cream can I use for a rash"],
+    "responses": ["Mild skin rashes can be treated with hydrocortisone cream and antihistamines. Avoid scratching to prevent infection.", "If the rash is widespread or accompanied by other symptoms like fever, it is best to see a healthcare provider."]
+    },
+    {
+    "tag": "arthritis",
+    "patterns": ["Joint pain", "Arthritis treatments", "Stiff joints", "Relief for arthritic pain", "Medications for arthritis"],
+    "responses": ["Nonsteroidal anti-inflammatory drugs (NSAIDs) like Ibuprofen are commonly used to treat arthritis pain. Applying heat or cold to the affected areas may also help.", "Regular, gentle exercise like swimming can improve arthritis symptoms."]
+    },
+    {
+    "tag": "diabetes",
+    "patterns": ["Signs of diabetes", "Diabetes treatment", "How to manage diabetes", "Diabetic medication", "Blood sugar control"],
+    "responses": ["Managing diabetes involves maintaining a balanced diet, regular exercise, and monitoring blood sugar levels. Medications might include insulin or metformin.", "Regular check-ups with a healthcare provider are crucial for monitoring and managing diabetes."]
+    },
+    {
+    "tag": "backpain",
+    "patterns": ["I have back pain", "Lower back pain", "Back pain relief", "Chronic back pain", "Treatment for back pain"],
+    "responses": ["For temporary relief of back pain, consider applying heat or ice to the affected area. Over-the-counter pain relievers like Ibuprofen may also help.", "If back pain persists for more than a week or is severe, consult a healthcare professional."]
+    },
+    {
+    "tag": "depression",
+    "patterns": ["Feeling depressed", "Help for depression", "Symptoms of depression", "Treatment for depression", "Medication for depression"],
+    "responses": ["It's important to talk to a healthcare provider about depression. Treatments can include therapy, medication, and lifestyle changes.", "Maintaining a regular exercise routine and a healthy diet can also support mental health."]
+    },
+    {
+    "tag": "pregnancy",
+    "patterns": ["I'm pregnant", "Pregnancy symptoms", "Pregnancy care", "Prenatal vitamins", "Pregnancy complications"],
+    "responses": ["During pregnancy, it's important to attend regular prenatal check-ups and follow your healthcare provider's advice. Taking prenatal vitamins and maintaining a healthy lifestyle are key.", "If you experience any unusual symptoms or complications during pregnancy, seek medical attention immediately."]
+    },
+    {
+    "tag": "COVID-19",
+    "patterns": ["Coronavirus symptoms", "COVID-19 information", "Preventing COVID-19", "Coronavirus vaccine", "Coronavirus testing"],
+    "responses": ["Common symptoms of COVID-19 include fever, cough, and difficulty breathing. Follow guidelines from health authorities to prevent the spread of the virus.", "Vaccination and regular testing are important measures to protect yourself and others from COVID-19."]
+    },
+    {
+    "tag": "exercise",
+    "patterns": ["How much exercise do I need?", "Best exercises for beginners", "Exercise for weight loss", "Exercise for seniors", "Exercise for mental health"],
+    "responses": ["The recommended amount of exercise is 150 minutes of moderate-intensity aerobic activity per week, plus muscle-strengthening activities on two or more days.", "Walking, swimming, and cycling are great exercises for beginners. Consult a fitness professional for personalized advice."]
+    },
+    {
+    "tag": "nutrition",
+    "patterns": ["Healthy eating tips", "Balanced diet", "Nutrition for athletes", "Nutrition for weight loss", "Vitamins and supplements"],
+    "responses": ["A balanced diet includes a variety of fruits, vegetables, whole grains, lean proteins, and healthy fats. Stay hydrated and limit processed foods and added sugars.", "Consult a registered dietitian for personalized nutrition advice, especially if you have specific dietary needs or goals."]
+    }
+    
+    ]
+    }
